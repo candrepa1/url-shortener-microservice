@@ -53,10 +53,8 @@ app.post("/api/shorturl", (req, res) => {
 			original_url: newUrl.href,
 		});
 		if (newUrl.protocol === "http:" || newUrl.protocol === "https:") {
-			console.log(newUrl, "first here");
 			first_url.save((err, data) => {
 				if (err) return console.error(err);
-				console.log(data, "here!!");
 				res.json({
 					original_url: data.original_url,
 					short_url: data._id,
