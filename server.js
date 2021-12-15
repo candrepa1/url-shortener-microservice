@@ -52,13 +52,19 @@ app.post("/api/shorturl", (req, res) => {
 		const first_url = new Url({
 			original_url: newUrl.href,
 		});
-		first_url.save((err, data) => {
-			if (err) return console.error(err);
-			res.json({
-				original_url: data.original_url,
-				short_url: data._id,
+		if (newUrl.protocol === "http:" || newUrl.protocol === "https:") {
+			console.log(newUrl, "first here");
+			first_url.save((err, data) => {
+				if (err) return console.error(err);
+				console.log(data, "here!!");
+				res.json({
+					original_url: data.original_url,
+					short_url: data._id,
+				});
 			});
-		});
+		} else {
+			res.json({ error: "invalid url" });
+		}
 	} catch (error) {
 		res.json({ error: "invalid url" });
 	}
